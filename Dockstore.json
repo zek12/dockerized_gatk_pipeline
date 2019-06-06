@@ -1,0 +1,36 @@
+{
+  "finished1": {
+    "path": "/tmp/logs/part_3_GenotypeGVCFs_finished.txt",
+    "class": "File"
+  },
+  "gatk_ref_bundle_gzipped_dbsnp": {
+    "path": "/home/ubuntu/temp/b37/dbsnp_138.b37.vcf.gz",
+    "class": "File"
+  },
+  "path_logs": {
+    "path": "/tmp/logs",
+    "class": "Directory"
+  },
+  "mem": 32,
+  "path_output": {
+    "path": "/tmp/output",
+    "class": "Directory"
+  },
+  "log": {
+    "path": "/tmp/logs/log.log",
+    "class": "File"
+  },
+  "vcf": {
+    "path": "/tmp/output/joint.vcf",
+    "class": "File"
+  },
+  "chr": "Y",
+  "path_to_gvcfs": {
+    "path": "/tmp/input_gvcfs",
+    "class": "Directory"
+  },
+  "finished2": {
+    "path": "/tmp/logs/part_3_joint_validation_finished.txt",
+    "class": "File"
+  }
+}
