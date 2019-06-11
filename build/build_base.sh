@@ -1,26 +1,58 @@
 #!/bin/bash
 
+# we are in /opt
 set -uxe
 
 # Basic preparation for apt package installation
 apt-get -yq update
-apt-get -yq install --no-install-recommends curl software-properties-common apt-transport-https ca-certificates
+apt-get -yq install --no-install-recommends wget curl software-properties-common apt-transport-https ca-certificates
+
 
 ## install JAVA
-add-apt-repository -y ppa:webupd8team/java
-bash -c '/bin/echo debconf shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections'
-bash -c '/bin/echo debconf shared/accepted-oracle-license-v1-1 seen true | /usr/bin/debconf-set-selections'
-apt-get -yq update
-apt-get -yq install --no-install-recommends oracle-java8-installer oracle-java8-unlimited-jce-policy
+# add-apt-repository -y ppa:webupd8team/java
+# bash -c '/bin/echo debconf shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections'
+# bash -c '/bin/echo debconf shared/accepted-oracle-license-v1-1 seen true | /usr/bin/debconf-set-selections'
+# apt-get -yq update
+# apt-get -yq install --no-install-recommends oracle-java8-installer oracle-java8-unlimited-jce-policy
 
-# Install Samtools 1.7
-# apt-get -yq install --no-install-recommends samtools=1.7-1
+# apt-get -yq install default-jdk
+# apt-get -yq upgrade
+# apt-get -yq update
+# apt -yq autoremove
+# apt-get -yq install default-jre
+apt -yq install openjdk-8-jdk
+# update-alternatives --config java
+
+java -version
+
+# Install tabix
+apt-get -yq install tabix 
 
 # Install GATK 3.7
 curl -sSL 'https://software.broadinstitute.org/gatk/download/auth?package=GATK-archive&version=3.7-0-gcfedb67' > GenomeAnalysisTK.tar.bz2
 tar xjf GenomeAnalysisTK.tar.bz2
-rm GenomeAnalysisTK.tar.bz2
-rm -r resources
+rm GenomeAnalysisTK.tar.bz2 && rm -r resources
+
+# Download GATK bundle
+wget ftp://ftp.broadinstitute.org/bundle/b37/dbsnp_138.b37.vcf.gz --user=gsapubftp-anonymous
+gunzip dbsnp_138.b37.vcf.gz
+bgzip dbsnp_138.b37.vcf
+tabix -p vcf dbsnp_138.b37.vcf.gz
+
+# Install R and R packages needed by GATK
+# apt-get -yq install dirmngr --install-recommends
+# apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+# add-apt-repository -y 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/'
+# apt -yq update
+# apt -yq install r-base
+# R --version
+
+# Rscript -e 'install.packages(c("ggplot2", "gplots", "reshape", "gsalib"))'
+
+
+
+# Install Samtools 1.7
+# apt-get -yq install --no-install-recommends samtools=1.7-1
 
 # Install Picard 2.0.1
 # DEBIAN_FRONTEND=noninteractive apt-get -yq install --no-install-recommends ant git r-base r-base-dev
@@ -47,4 +79,3 @@ rm -r resources
 apt-get clean autoclean
 apt-get autoremove -y
 
-Rscript -e 'install.packages(c("ggplot2", "gplots", "reshape", "gsalib"))'  # for GATK to use

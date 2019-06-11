@@ -8,22 +8,18 @@ doc: |
     ![build_status](https://quay.io/repository/zek12/dockerized_gatk_pipeline/status)
     See the [dockerized_gatk_pipeline](https://github.com/zek12/dockerized_gatk_pipeline) website for more information.
 
-$namespaces:
-  dct: http://purl.org/dc/terms/
-  foaf: http://xmlns.com/foaf/0.1/
-  s: http://schema.org/
-
 $schemas:
 - http://schema.org/docs/schema_org_rdfa.html
 - http://dublincore.org/2012/06/14/dcterms.rdf
 - http://xmlns.com/foaf/spec/20140114.rdf
 
 
-
 dct:creator:
   "@id": "Ezequiel.Anokian@icr.ac.uk"
   foaf:name: Ezequiel Anokian
-  foaf:mbox: "Ezequiel.Anokian@icr.ac.uk"
+  foaf:mbox: "mailto:Ezequiel.Anokian@icr.ac.uk"
+
+
 
 requirements:
   - class: DockerRequirement
@@ -38,7 +34,7 @@ inputs:
 
   path_to_gvcfs:
     type: Directory
-    doc: "path where the gvcfs are located"
+    doc: "path where the gvcfs are located. All indexes must be located here!!!"
     inputBinding:
       position: 1
       shellQuote: true
@@ -50,34 +46,22 @@ inputs:
       position: 2
       shellQuote: true
 
-  path_logs:
-    type: Directory
-    doc: "path where to save the log files"
-    inputBinding:
-      position: 3
-      shellQuote: true
 
-  path_output:
-    type: Directory
-    doc: "path where to save the output VCF"
-    inputBinding:
-      position: 4
-      shellQuote: true
 
   mem:
     type: int
-    doc: "number of GBs for max memory of Java processes to use. Default: 32GB."
+    doc: "number of GBs for max memory of Java processes to use. Default: 32"
     default: 32
     inputBinding:
-      position: 5
+      position: 3
 
-  gatk_ref_bundle_gzipped_dbsnp:
+  ref_genome:
     type: File
-    doc: "gzipped Mills and 1000G golden standard indels vcf file from GATK reference bundle. Use Mills_and_1000G_gold_standard.indels.b37.vcf.gz. It can be downloaded from ftp://ftp.broadinstitute.org/bundle/, username: gsapubftp-anonymous, no password"
+    doc: "reference genome files (.fa and .dict) in tar. Default: http://ftp.sanger.ac.uk/pub/cancer/dockstore/human/core_ref_GRCh37d5.tar.gz"
+    default: "http://ftp.sanger.ac.uk/pub/cancer/dockstore/human/core_ref_GRCh37d5.tar.gz"
     inputBinding:
-      position: 6
+      position: 4
       shellQuote: true
-
 
 
 outputs:
@@ -86,28 +70,17 @@ outputs:
     type: File
     format: "http://edamontology.org/format_3016"
     outputBinding:
-      glob: $(inputs.path_output)/joint_chr$(inputs.chr).vcf
-
-  log:
-    type: File
-    outputBinding:
-      glob: $(inputs.path_logs)/log.log
-
-  finished1:
-    type: File
-    outputBinding:
-      glob: $(inputs.path_logs)/part_3_GenotypeGVCFs_finished_chr$(inputs.chr).txt
-
-  finished2:
-    type: File
-    outputBinding:
-      glob: $(inputs.path_logs)/part_3_joint_validation_finished_chr$(inputs.chr).txt
+      glob: joint_chr$(inputs.chr).vcf
 
 
-baseCommand: ["part3_joint_genotyping.sh"]
 
-s:codeRepository: https://github.com/zek12/dockerized_gatk_pipeline
-s:author:
-  - class: s:Person
-    s:email: mailto:Ezequiel.Anokian@icr.ac.uk
-    s:name: Ezequiel Anokian
+
+baseCommand: ["/opt/part3_joint_genotyping.sh"]
+
+
+$namespaces:
+  dct: http://purl.org/dc/terms/
+  foaf: http://xmlns.com/foaf/0.1/
+  s: http://schema.org/
+
+

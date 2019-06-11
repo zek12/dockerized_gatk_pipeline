@@ -11,21 +11,30 @@ set -xueo pipefail
 
 path_to_gvcfs=$1
 chr=$2 # 1, 2, ..., 22, X, Y, MT
-path_logs=$3
-path_output=$4
-mem=$5 # = 32
-gatk_ref_bundle_gzipped_dbsnp=$6 # $bundle2_8/b37/dbsnp_138.b37.vcf
+path_logs="."
+path_output_vcf="."
+mem=$3 # = 32
+ref_genome=$4
 
-path_ref=ref/genome.fa
-this_gatk="java -Xmx${mem}g -Djava.io.tmpdir=/tmp -Djava.library.path=/tmp -jar /opt/GenomeAnalysisTK.jar -R $path_ref"
+gatk_ref_bundle_dbsnp="/opt/dbsnp_138.b37.vcf.gz"
 logfile=${path_logs}/log.log
 
-mkdir -p $path_logs
-mkdir -p $path_output
 
-gatk_ref_bundle_dbsnp="gatk_bundle/gatk_ref_bundle_dbsnp.vcf"
-gunzip -c $gatk_ref_bundle_gzipped_dbsnp > $gatk_ref_bundle_dbsnp
 
+
+# prepare ref genome
+mkdir -p ref
+tar xzf $ref_genome -C ref --strip-components 1
+# path_ref=ref/genome.fa
+path_ref=$(find ref -name *.fa) # ref/genome.fa
+path_dict=$(find ref -name *.dict) # ref/genome.fa.dict
+new_name=$(echo "${path_ref/\.fa/\.dict}")
+cp $path_dict $new_name
+
+
+
+
+this_gatk="java -Xmx${mem}g -Djava.io.tmpdir=/tmp -Djava.library.path=/tmp -jar /opt/GenomeAnalysisTK.jar -R $path_ref"
 
 
 
@@ -48,7 +57,7 @@ if [ ! -f $path_logs/part_3_GenotypeGVCFs_finished_chr$chr.txt ]; then
 	-L $chr \
 	-newQual \
 	--disable_auto_index_creation_and_locking_when_reading_rods \
-	-o $path_output/joint_chr$chr.vcf )
+	-o $path_output_vcf/joint_chr$chr.vcf )
 
 	# added -newQual
 	# if the previous command gives an error, try:
@@ -76,7 +85,7 @@ if [ ! -f $path_logs/part_3_joint_validation_finished_chr$chr.txt ]; then
 
 	time ($this_gatk \
 	-T ValidateVariants \
-	-V $path_output/joint_chr$chr.vcf \
+	-V $path_output_vcf/joint_chr$chr.vcf \
 	--validationTypeToExclude ALL \
 	) >> "$logfile"
 

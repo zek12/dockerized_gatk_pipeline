@@ -4,17 +4,18 @@ Dockerised version of Ezequiel Anokian's GATK pipeline for germline variants ana
 
 ## Packaged tool versions
 
-* **Java:** `1.8.0_191`
+* **Java:** `1.8.0_212`
 * **GATK:** `v3.7-0-gcfedb67`
 * **Picardtools:** `2.0.1` (built with `htsjdk-2.0.1`)
 * **VerifyBamID:** `1.1.2`
 * **samtools:** `1.7.1`
-* **R:** `3.4.4` with packages below:
-  * ggplot2: `3.1.0`
+* **R:** `3.6.0 (2019-04-26)` with packages below:
+  * ggplot2: `3.1.1`
   * gplots: `3.0.1`
   * gsalib: `2.1`
   * reshape `0.8.8`
   And their dependencies.
+
 
 ## Packaged CWL tool
 
@@ -30,5 +31,5 @@ Details of inputs and outputs are in `cwl/bam_to_gvcf.json`.
 
 Performs joint-genotyping of all samples per chromosome.
 
-Details of inputs and outputs are in `part3.json`.
+Details of inputs and outputs are in `Dockstore.json`.
 
