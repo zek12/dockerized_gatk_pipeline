@@ -6,7 +6,7 @@
     "class": "Directory"
   },
   "ref_genome":{
-    "path": "/tmp/core_ref_GRCh37d5.tar.gz",
+    "path": "http://ftp.sanger.ac.uk/pub/cancer/dockstore/human/core_ref_GRCh37d5.tar.gz",
     "class": "File"
   },
   "vcf": {
