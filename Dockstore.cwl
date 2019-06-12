@@ -1,9 +1,13 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
+
 id: "GATK_joint_genotyping"
+
 label: "Perform joint-genotyping of all samples per chromosome using GATK GenotypeGVCFs"
+
 cwlVersion: v1.0
+
 doc: |
     ![build_status](https://quay.io/repository/zek12/dockerized_gatk_pipeline/status)
     See the [dockerized_gatk_pipeline](https://github.com/zek12/dockerized_gatk_pipeline) website for more information.
@@ -83,4 +87,9 @@ $namespaces:
   foaf: http://xmlns.com/foaf/0.1/
   s: http://schema.org/
 
+s:codeRepository: https://github.com/zek12/dockerized_gatk_pipeline
+s:author:
+  - class: s:Person
+    s:email: mailto:Ezequiel.Anokian@icr.ac.uk
+    s:name: Ezequiel Anokian
 
