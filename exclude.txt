@@ -1,0 +1,2 @@
+sample1.g.vcf.gz
+sample2.g.vcf.gz

@@ -27,7 +27,7 @@ dct:creator:
 
 requirements:
   - class: DockerRequirement
-    dockerPull: "quay.io/zek12/dockerized_gatk_pipeline:0.1.0"
+    dockerPull: "quay.io/zek12/dockerized_gatk_pipeline:0.2.0"
 
 hints:
   - class: ResourceRequirement
@@ -65,6 +65,13 @@ inputs:
     default: "http://ftp.sanger.ac.uk/pub/cancer/dockstore/human/core_ref_GRCh37d5.tar.gz"
     inputBinding:
       position: 4
+      shellQuote: true
+
+  exclude:
+    type: File
+    doc: "A txt file with the gvcfs to exclude (bad samples) from the joint genotyping. Samples have to be one per line and ending with .g.vcf.gz"
+    inputBinding:
+      position: 5
       shellQuote: true
 
 

@@ -15,11 +15,20 @@ path_logs="."
 path_output_vcf="."
 mem=$3 # = 32
 ref_genome=$4
+exclude=$5
+
+# remove last slash in input dirs if they end with slash
+path_to_gvcfs=${path_to_gvcfs%/}
+
 
 gatk_ref_bundle_dbsnp="/opt/dbsnp_138.b37.vcf.gz"
 logfile=${path_logs}/log.log
 
 
+# exclude bad samples
+# ls -1a $path_to_gvcfs/*.g.vcf.gz | sed -e 's/.*\///g' | sed -e 's/\..*//g' > all_samples.txt
+ls -1a $path_to_gvcfs/*.g.vcf.gz | sed -e 's/.*\///g' > all_samples.txt
+grep -F -x -v -f $exclude all_samples.txt > passed.txt
 
 
 # prepare ref genome
@@ -47,8 +56,10 @@ if [ ! -f $path_logs/part_3_GenotypeGVCFs_finished_chr$chr.txt ]; then
 
 	echo "$(date '+%d/%m/%y_%H:%M:%S'),---Starting GenotypeGVCFs: joint genotyping of chromosome $chr---" >> "$logfile"
 
-	gvcf_paths=$(ls $path_to_gvcfs/*.g.vcf.gz)
-	gvcf_array=$(for i in $gvcf_paths; do echo "--variant $i"; done)
+	# gvcf_paths=$(ls $path_to_gvcfs/*.g.vcf.gz)
+	# gvcf_array=$(for i in $gvcf_paths; do echo "--variant $i"; done)
+	gvcf_paths=$(cat passed.txt)
+	gvcf_array=$(for i in $gvcf_paths; do echo "--variant $path_to_gvcfs/$i"; done)
 
 	time ($this_gatk \
 	-T GenotypeGVCFs \

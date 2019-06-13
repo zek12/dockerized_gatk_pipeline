@@ -9,8 +9,12 @@
     "path": "http://ftp.sanger.ac.uk/pub/cancer/dockstore/human/core_ref_GRCh37d5.tar.gz",
     "class": "File"
   },
+  "exclude": {
+    "path": "exclude.txt",
+    "class": "File"
+  },
   "vcf": {
-    "path": "/tmp/joint_chrY.vcf",
+    "path": "joint_chrY.vcf",
     "class": "File"
   }
 }
