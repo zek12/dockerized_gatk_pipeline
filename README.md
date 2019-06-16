@@ -33,7 +33,7 @@ Performs joint-genotyping of all samples per chromosome using `GATK GenotypeGVCF
 * Insert size metrics: insert size has to be >= 250 bp.
   * Check in file **<sample>.multiple_metrics.insert_size_metrics**, column MEAN_INSERT_SIZE, where READ_GROUP = "".
 * GC bias: AT_DROPOUT and GC_DROPOUT must be <= 5%.
-  * Check in file **<sample>.multiple_metrics.gc_bias.summary_metrics**, columns AT_DROPOUT and GC_DROPOUT, where ACCUMULATION_LEVEL = "SAMPLE".
+  * Check in file **<sample>.multiple_metrics.gc_bias.summary_metrics**, columns AT_DROPOUT and GC_DROPOUT, where ACCUMULATION_LEVEL = "Sample".
 * Alignment metrics: PCT_PF_READS_ALIGNED has to be >= 95%, and PF_MISMATCH_RATE must be <= 5%.
   * Check in file **<sample>.multiple_metrics.alignment_summary_metrics**, columns PCT_PF_READS_ALIGNED and PF_MISMATCH_RATE, where CATEGORY != "UNPAIRED".
 * Coverage: percentage of genome with at least 20X coverage must be >= 80%.
