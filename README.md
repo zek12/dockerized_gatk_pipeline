@@ -1,4 +1,4 @@
-# GATK_Eze
+# Dockerised GATK pipeline
 
 Dockerised version of Ezequiel Anokian's GATK pipeline for germline variants analysis. For pipeline's details please contact: Ezequiel.Anokian@icr.ac.uk
 
