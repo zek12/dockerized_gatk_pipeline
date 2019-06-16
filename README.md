@@ -29,7 +29,18 @@ Details of inputs and outputs are in `cwl/bam_to_gvcf.json`.
 
 ### Part 3: joint-genotyping
 
-Performs joint-genotyping of all samples per chromosome.
+Performs joint-genotyping of all samples per chromosome using `GATK GenotypeGVCFs`. Excludes samples in the `exclude` file, which must be filled in according to the following failing BAM QC metrics:
+* Insert size metrics: insert size has to be >= 250 bp.
+  * Check in file **<sample>.multiple_metrics.insert_size_metrics**, column MEAN_INSERT_SIZE, where READ_GROUP = "".
+* GC bias: AT_DROPOUT and GC_DROPOUT must be <= 5%.
+  * Check in file **<sample>.multiple_metrics.gc_bias.summary_metrics**, columns AT_DROPOUT and GC_DROPOUT, where ACCUMULATION_LEVEL = "SAMPLE".
+* Alignment metrics: PCT_PF_READS_ALIGNED has to be >= 95%, and PF_MISMATCH_RATE must be <= 5%.
+  * Check in file **<sample>.multiple_metrics.alignment_summary_metrics**, columns PCT_PF_READS_ALIGNED and PF_MISMATCH_RATE, where CATEGORY != "UNPAIRED".
+* Coverage: percentage of genome with at least 20X coverage must be >= 80%.
+  * Check in file **<sample>.wgs_metrics.txt**, column PCT_20X.
+* Contamination: sample contamination has to be <= 3%.
+  * Check in file **<sample>.VerifyBamID.selfSM**, column FREEMIX.
+
 
 Details of inputs and outputs are in `Dockstore.json`.
 
