@@ -27,7 +27,7 @@ dct:creator:
 
 requirements:
   - class: DockerRequirement
-    dockerPull: "quay.io/zek12/dockerized_gatk_pipeline:0.2.0"
+    dockerPull: "quay.io/zek12/dockerized_gatk_pipeline:0.1.1"
 
 hints:
   - class: ResourceRequirement
