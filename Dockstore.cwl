@@ -13,7 +13,7 @@ doc: |
     See the [dockerized_gatk_pipeline](https://github.com/zek12/dockerized_gatk_pipeline) website for more information.
 
 $schemas:
-- http://schema.org/docs/schema_org_rdfa.html
+- https://schema.org/version/latest/schema.rdf
 - http://dublincore.org/2012/06/14/dcterms.rdf
 - http://xmlns.com/foaf/spec/20140114.rdf
 
